@@ -1,5 +1,15 @@
 ## Dev superior - Spring Boot
 
+#### Atividades - Desavios
+ - Desafio Componentes e injeção de dependências: 
+```bash 
+git checkout componentes_injecao_de_depenpendencia
+```  
+ - Desafio Modelo de domínio e ORM: 
+```bash
+git checkout modelo_dominio_orm
+```
+
 ###### Overview
  - O sistema deve manter um cadastro de usuário, produtos e suas categorias. 
  - Cada usuário possui nome, email, telefone, data de nascimento e uma senha de acesso. 
