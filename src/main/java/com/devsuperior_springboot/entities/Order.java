@@ -1,43 +1,43 @@
 package com.devsuperior_springboot.entities;
 
-import org.springframework.stereotype.Component;
+import jakarta.persistence.*;
+import lombok.*;
 
-@Component
+import java.time.Instant;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "tb_order")
 public class Order {
-    private Integer code;
-    private Double basic;
-    private Double discount;
 
-    public Order() {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant moment;
+
+    private OrderStatus status;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private User client;
+
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private Payment payment;
+
+    @Setter(AccessLevel.NONE)
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> items = new HashSet<>();
+
+    public List<Product> getProducts() {
+        return items.stream().map(x -> x.getProduct()).toList();
     }
 
-    public Order(Integer code, Double basic, Double discount) {
-        this.code = code;
-        this.basic = basic;
-        this.discount = discount;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
-    public Double getBasic() {
-        return basic;
-    }
-
-    public void setBasic(Double basic) {
-        this.basic = basic;
-    }
-
-    public Double getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(Double discount) {
-        this.discount = discount;
-    }
 }
