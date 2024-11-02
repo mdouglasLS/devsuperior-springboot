@@ -1,54 +1,41 @@
 ## Dev superior - Spring Boot
 
-### Desafio - Componentes e injeção de dependência
+### Desafio - Modelo de domínio e ORM
 
- - A solução deverá ser implementada em Java com Spring Boot. A saída deverá ser mostrada no log
-do terminal da aplicação. Cada serviço deve ser implementado como um componente registrado com
-`@Service`.
- - Criar um sistema para calcular o valor total de um pedido, considerando uma porcentagem
-de desconto e o frete. O cálculo do valor total do pedido consiste em aplicar o desconto ao valor
-básico do pedido, e adicionar o valor do frete. A regra para cálculo do frete é a seguinte:
+ - Criar um projeto no Spring Boot com Java e banco de dados H2, e implementar o modelo
+   conceitual conforme especificação a seguir. Além disso, você deve fazer o seeding da base de dados
+   conforme diagrama de objetos que segue.
 
-| Valor básico do pedido (sem desconto) | Frete    |
-|---------------------------------------|----------|
-| Abaixo de R$ 100.00                   | R$ 20.00 |
-| De R$ 100.00 até R$ 200.00 exclusive  | R$ 12.00 |
-| R$ 200.00 ou mais                     | Grátis   |
+###### Especificação - Sistema EVENTO
+ - Deseja-se construir um sistema para gerenciar as informações dos participantes das atividades de um
+evento acadêmico.
+ - As atividades deste evento podem ser, por exemplo, palestras, cursos, oficinas
+práticas, etc. 
+ - Cada atividade que ocorre possui nome, descrição, preço, e pode ser dividida em vários
+blocos de horários (por exemplo: um curso de HTML pode ocorrer em dois blocos, sendo necessário
+armazenar o dia e os horários de início de fim do bloco daquele dia). 
+ - Para cada participante, deseja-se cadastrar seu nome e email.
 
-Os exemplos de input e outpot são:
- - Exemplo 1:
+![img.png](img/uml.png)
 
-| ENTRADA (dados do pedido: código, valor básico, porcentagem de desconto) | SAÍDA                  |
-|--------------------------------------------------------------------------|------------------------|
-| 1034                                                                     | Pedido código 1034     |
-| 150.00                                                                   | Valor total: R$ 132.00 |
-| 20.0                                                                     |                        |
+###### Instância dos dados para seeding
+![img.png](img/seeding.png)
 
-- Exemplo 2:
 
-| ENTRADA (dados do pedido: código, valor básico, porcentagem de desconto) | SAÍDA                  |
-|--------------------------------------------------------------------------|------------------------|
-| 2282                                                                     | Pedido código 2282     |
-| 800.00                                                                   | Valor total: R$ 720.00 |
-| 10.0                                                                     |                        |
+###### Queries para verificar os dados
+ - Listar todos os participantes com suas atividades e categorias, ordenados pelo nome do participante.
+```sql
+SELECT PA.ID AS PART_ID, PA.NOME AS PART_NOME, PA.EMAIL AS PART_EMAIL, AT.ID AS ATIV_ID, AT.NOME AS ATIV_NOME, AT.DESCRICAO AS ATIV_DESC, AT.PRECO AS ATIV_PRECO, CAT.ID AS CAT_ID, CAT.DESCRICAO AS CAT
+FROM TB_ATIVIDADE_PARTICIPANTE AP
+INNER JOIN TB_PARTICIPANTE PA ON PA.ID = AP.PARTICIPANTE_ID
+INNER JOIN TB_ATIVIDADE AT ON AT.ID = AP.ATIVIDADE_ID
+INNER JOIN TB_CATEGORIA CAT ON CAT.ID = AT.CATEGORIA_ID
+ORDER BY PA.NOME;
+```
 
-- Exemplo 3:
-
-| ENTRADA (dados do pedido: código, valor básico, porcentagem de desconto) | SAÍDA                  |
-|--------------------------------------------------------------------------|------------------------|
-| 1309                                                                     | Pedido código 1309     |
-| 95.90                                                                    | Valor total: R$ 115.90 |
-| 0.0                                                                      |                        |
-
-A solução deverá seguir as seguintes especificações:
- - Um pedido deve ser representado por um objeto `Order`
- - A lógica do cálculo do valor total do pedido deve ser implementada por componentes (services), cada
-   um com sua responsabilidade
-   - `OrderService` - responsável por calcular o valor total do pedido
-   - `ShippingService` - responsável por calcular o valor do frete
-
-| Order              | OrderService                 | ----> | ShippingService                 |
-|--------------------|------------------------------|-------|---------------------------------|
-| - code: Integer    | + total(Order order): double |       | + shipment(Order order): double |
-| - basic: Double    |                              |       |                                 |
-| - discount: Double |                              |       |                                 |
+ - Listar as atividades com seus blocos de horários
+```sql
+SELECT BL.ID AS BL_ID, BL.INICIO AS INICIO, BL.FIM AS FIM, AT.ID AS AT_ID, AT.NOME AS AT_NOME, AT.DESCRICAO AS AT_DESCRICAO
+FROM TB_BLOCO BL
+INNER JOIN TB_ATIVIDADE AT ON AT.ID = BL.ATIVIDADE_ID
+```
