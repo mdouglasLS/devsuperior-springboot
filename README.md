@@ -9,6 +9,12 @@ git checkout componentes_injecao_de_depenpendencia
 ```bash
 git checkout modelo_dominio_orm
 ```
+- Desafio CRUD de Clientes:
+```bash
+git checkout crud_clientes
+```
+
+## DSCommerce
 
 ###### Overview
  - O sistema deve manter um cadastro de usuário, produtos e suas categorias. 
