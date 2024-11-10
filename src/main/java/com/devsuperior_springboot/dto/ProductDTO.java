@@ -1,10 +1,7 @@
 package com.devsuperior_springboot.dto;
 
 import com.devsuperior_springboot.entities.Product;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +27,7 @@ public class ProductDTO {
     @Size(min = 10, message = "Descrição deve ter no mínimo 10 caracteres.")
     private String description;
 
+    @NotNull(message = "Campo requerido.")
     @Positive(message = "Preço deve ser um valor positivo.")
     private Double price;
     private String imgUrl;
