@@ -1,6 +1,7 @@
 package com.devsuperior_springboot.services;
 
 import com.devsuperior_springboot.dto.ProductDTO;
+import com.devsuperior_springboot.dto.ProductMinDTO;
 import com.devsuperior_springboot.entities.Product;
 import com.devsuperior_springboot.repositories.ProductRepository;
 import com.devsuperior_springboot.services.exceptions.DatabaseException;
@@ -25,10 +26,10 @@ public class ProductService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public Page<ProductDTO> findAll(String name, Pageable pageable) {
+    public Page<ProductMinDTO> findAll(String name, Pageable pageable) {
         Page<Product> products = repository.searchByName(name, pageable);
         repository.findProductsCategories(products.getContent());
-        return products.map(product -> modelMapper.map(product, ProductDTO.class));
+        return products.map(product -> modelMapper.map(product, ProductMinDTO.class));
     }
 
     public ProductDTO findById(Long id) {
