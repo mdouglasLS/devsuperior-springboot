@@ -1,5 +1,6 @@
 package com.devsuperior_springboot.dto;
 
+import com.devsuperior_springboot.entities.Product;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
@@ -7,6 +8,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -27,5 +32,15 @@ public class ProductDTO {
     @Positive(message = "Preço deve ser um valor positivo.")
     private Double price;
     private String imgUrl;
+    List<CategoryDTO> categories = new ArrayList<>();
+
+    public ProductDTO(Product product) {
+        id = product.getId();
+        name = product.getName();
+        description = product.getDescription();
+        price = product.getPrice();
+        imgUrl = product.getImgUrl();
+        product.getCategories().stream().map(x -> new CategoryDTO(x)).collect(Collectors.toList());
+    }
 
 }

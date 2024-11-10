@@ -25,8 +25,9 @@ public class ProductService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public Page<ProductDTO> findAll(Pageable pageable) {
-        Page<Product> products = repository.findAll(pageable);
+    public Page<ProductDTO> findAll(String name, Pageable pageable) {
+        Page<Product> products = repository.searchByName(name, pageable);
+        repository.findProductsCategories(products.getContent());
         return products.map(product -> modelMapper.map(product, ProductDTO.class));
     }
 
