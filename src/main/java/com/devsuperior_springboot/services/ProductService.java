@@ -2,6 +2,7 @@ package com.devsuperior_springboot.services;
 
 import com.devsuperior_springboot.dto.ProductDTO;
 import com.devsuperior_springboot.dto.ProductMinDTO;
+import com.devsuperior_springboot.entities.Category;
 import com.devsuperior_springboot.entities.Product;
 import com.devsuperior_springboot.repositories.ProductRepository;
 import com.devsuperior_springboot.services.exceptions.DatabaseException;
@@ -78,5 +79,13 @@ public class ProductService {
         product.setPrice(dto.getPrice());
         product.setDescription(dto.getDescription());
         product.setImgUrl(dto.getImgUrl());
+        product.getCategories().clear();
+        dto.getCategories().forEach(catDTO -> {
+            Category category = new Category();
+            category.setId(catDTO.getId());
+            product.getCategories().add(category);
+        });
+
+
     }
 }

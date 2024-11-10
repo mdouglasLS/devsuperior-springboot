@@ -2,6 +2,7 @@ package com.devsuperior_springboot.dto;
 
 import com.devsuperior_springboot.entities.Product;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -32,6 +33,8 @@ public class ProductDTO {
     @Positive(message = "Preço deve ser um valor positivo.")
     private Double price;
     private String imgUrl;
+
+    @NotEmpty(message = "Deve ter pelo menos uma categoria.")
     List<CategoryDTO> categories = new ArrayList<>();
 
     public ProductDTO(Product product) {
