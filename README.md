@@ -63,3 +63,15 @@ git checkout crud_clientes
 | Usuário anônimo | Pode realizar casos de uso das áreas públicas do sistema, como  catálogo, carrinho de compras, login e sign up.                                               |
 | Cliente         | Responsável por manter seu próprios dados pessoais no sistema, e pode visualizar histórico dos seus pedidos. Todo usuário cadastrado por padrão é um Cliente. |
 | Admin           | Responsável por acessar a área administrativa do sistema com cadastros e relatórios. Admin também pode fazer tudo que Cliente faz.                            |
+
+
+###### TODO
+
+- [x] Mínimo 12 commits no projeto no usuário do aluno (eliminatório)
+- [x] Endpoints públicos GET /produts e GET /products/{id} funcionam sem necessidade de login (eliminatório)
+- [x] Endpoint de login funcionando e retornando o token de acesso (eliminatório)
+- [x] Endpoints privados de produto (POST/PUT/DELETE) funcionam somente para usuário ADMIN (eliminatório)
+- [x] Endpoint GET /users/me retorna usuário logado (eliminatório)
+- [x] Endpoints GET /orders/{id} e POST /orders funcionando (eliminatório)
+- [x] Usuário que não é ADMIN não consegue acessar pedido que não é dele em GET /orders/{id} (eliminatório)
+- [x] Endpoint GET /categories retorna todas categorias
