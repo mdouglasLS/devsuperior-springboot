@@ -3,6 +3,7 @@ package com.devsuperior_springboot.dto;
 import com.devsuperior_springboot.entities.Order;
 import com.devsuperior_springboot.entities.OrderItem;
 import com.devsuperior_springboot.entities.OrderStatus;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,8 @@ public class OrderDTO {
     private OrderStatus status;
     private ClientDTO client;
     private PaymentDTO payment;
+
+    @NotEmpty(message = "Deve ter pelo menos um item")
     private List<OrderItemDTO> items = new ArrayList<>();
 
     public OrderDTO(Order order) {
